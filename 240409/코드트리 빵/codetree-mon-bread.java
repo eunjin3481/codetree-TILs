@@ -122,7 +122,7 @@ public class Main {
                 int nextRow = cur.r + dr[d];
                 int nextCol = cur.c + dc[d];
 
-                if (!checkRange(nextRow, nextCol) || map[nextRow][nextCol] == INACCESSIBLE) {
+                if (!checkRange(nextRow, nextCol) || isVisit[nextRow][nextCol] || map[nextRow][nextCol] == INACCESSIBLE) {
                     continue;
                 }
 
