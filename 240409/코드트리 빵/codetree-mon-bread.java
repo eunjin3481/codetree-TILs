@@ -27,7 +27,7 @@ public class Main {
         map = new int[n][n];
         marts = new Pos[m + 1];
         humans = new Human[m + 1];
-        isVisit = new boolean[n][n];
+        
 
         // 격자 정보 입력
         for (int i = 0; i < n; i++) {
@@ -64,9 +64,10 @@ public class Main {
 
             // 해당 시간의 사람 베이스 캠프로 이동
             if (time <= m) {
-                for(int i = 0; i < n; i++) {
-                    Arrays.fill(isVisit[i],false);
-                }
+                //for(int i = 0; i < n; i++) {
+                //    Arrays.fill(isVisit[i],false);
+                //}
+                isVisit = new boolean[n][n];
                 goBaseCamp(time);
             }
 
