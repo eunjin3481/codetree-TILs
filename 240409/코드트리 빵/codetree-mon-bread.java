@@ -115,7 +115,7 @@ public class Main {
 				}
 
 				queue.offer(new Pos(nextRow, nextCol, nextD));
-
+                isVisit[nextRow][nextCol] = true;
 			}
 		}
 
