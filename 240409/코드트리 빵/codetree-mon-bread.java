@@ -48,7 +48,7 @@ public class Main {
 		int time = 0;
 		while (true) {
 			time++;
-//			System.out.println("완료한 사람: " + num);
+//			System.out.println("완료한 사람: " + num + ", 시간:" + time);
 
 			// 편의점으로 가는 방향 중 가장 가까운데로 이동
 			for (int i = 1; i <= m; i++) {
@@ -58,10 +58,10 @@ public class Main {
 					continue; // 편의점에 도착한 경우
 
 //				if (i != 0) {
+//					System.out.println("-----편의점 이동 -- 사람: " + i + ", 행: " + humans[i].r + ", 열: " + humans[i].c);
 //					for (int k = 0; k < n; k++) {
 //						System.out.println(Arrays.toString(map[k]));
 //					}
-//					System.out.println("-----편의점 이동 -- 사람: " + i + ", 행: " + humans[i].r + ", 열: " + humans[i].c);
 //
 //				}
 
@@ -89,7 +89,7 @@ public class Main {
 	public static void move(int idx) {
 		Queue<Pos> queue = new ArrayDeque<>();
 		isVisit = new boolean[n][n];
-		queue.offer(new Pos(humans[idx].r, humans[idx].c, -1));
+		queue.offer(new Pos(humans[idx].r, humans[idx].c, -1)); // (row, col, 방향)
 		isVisit[humans[idx].r][humans[idx].c] = true;
 
 		while (!queue.isEmpty()) {
@@ -115,7 +115,7 @@ public class Main {
 				}
 
 				queue.offer(new Pos(nextRow, nextCol, nextD));
-                isVisit[nextRow][nextCol] = true;
+				isVisit[nextRow][nextCol] = true;
 			}
 		}
 
@@ -124,17 +124,29 @@ public class Main {
 	public static void goBaseCamp(int idx) {
 		Queue<Pos> queue = new ArrayDeque<>();
 		isVisit = new boolean[n][n];
-		queue.offer(new Pos(marts[idx].r, marts[idx].c));
+		queue.offer(new Pos(marts[idx].r, marts[idx].c, 0));
 		isVisit[marts[idx].r][marts[idx].c] = true;
 
+		int row = Integer.MAX_VALUE;
+		int col = Integer.MAX_VALUE;
+		int distance = Integer.MAX_VALUE;
 		while (!queue.isEmpty()) {
 			Pos cur = queue.poll();
 
 			// 베이스캠프 도착했을 경우
 			if (map[cur.r][cur.c] == 1) {
-				humans[idx] = new Human(cur.r, cur.c, false); // 현재 사람의 위치 저장
-				map[cur.r][cur.c] = INACCESSIBLE; // 더이상 지나갈 수 없는 곳으로 표시
-				return;
+				
+				// 더이상 가까운 베이스캠프가 없을 경우
+				if(distance < cur.d) {
+					break;
+				}
+				
+				// 행 비교
+				if(row > cur.r || (row == cur.r && col > cur.c)) {
+					row = cur.r;
+					col = cur.c;
+					distance = cur.d;
+				} 
 			}
 
 			for (int d = 0; d < 4; d++) {
@@ -146,10 +158,13 @@ public class Main {
 					continue;
 				}
 
-				queue.offer(new Pos(nextRow, nextCol));
+				queue.offer(new Pos(nextRow, nextCol, cur.d + 1));
 				isVisit[nextRow][nextCol] = true;
 			}
 		}
+		
+		humans[idx] = new Human(row, col, false); // 현재 사람의 위치 저장
+		map[row][col] = INACCESSIBLE; // 더이상 지나갈 수 없는 곳으로 표시
 	}
 
 	public static void checkArrive() {
