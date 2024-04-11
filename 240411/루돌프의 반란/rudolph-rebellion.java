@@ -49,11 +49,10 @@ public class Main {
 
         // M개의 턴
         for (int m = 1; m <= M; m++) {
-//            System.out.println("-----턴: " + m);
-//            System.out.println("-----루돌프 움직이기 전: " + rudolphRow + ", " + rudolphCol);
 
             // 1. 루돌프 움직임
             moveRudolph();
+//            System.out.println("-----턴: " + m);
 //            System.out.println("-----루돌프 움직인 후: " + rudolphRow + ", " + rudolphCol);
 
             // 2. 산타 1~P번까지 순서대로 움직임
@@ -155,7 +154,7 @@ public class Main {
         // 충돌 했을 경우
         if (map[rudolphRow][rudolphCol] != 0) {
             // 루돌프 -> 산타 : 해당 산타 C만큼의 점수 얻음, 루돌프가 이동해온 방향으로 C칸 만큼 밀려남
-            clash(C, dir, map[rudolphRow][rudolphCol]);
+            clash(C, dir, map[rudolphRow][rudolphCol], 2);
         }
 
     }
@@ -204,14 +203,14 @@ public class Main {
         // 충돌
         if (santas[santa].r == rudolphRow && santas[santa].c == rudolphCol) {
             // 산타 -> 루돌프 : 해당 산타 D만큼의 점수 얻음, 자신이 이동해온 반대방향으로 D칸 만큼 밀려남
-            clash(D, (finalDir + 2) % 4, santa);
+            clash(D, (finalDir + 2) % 4, santa, 1);
         }
 
     }
 
-    public static void clash(int score, int dir, int santa) {
+    public static void clash(int score, int dir, int santa, int faintNum) {
         santas[santa].score += score; // 점수 획득
-        santas[santa].isFaint = (score == C ? 2 : 1); // 기절
+        santas[santa].isFaint = faintNum; // 기절
 
         for (int cnt = 1; cnt <= score; cnt++) {
             pushSanta(santa, dir);
