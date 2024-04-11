@@ -49,7 +49,7 @@ public class Main {
             attackTurret();
 
 
-            // 3. 포탑 부서짐
+//             3. 포탑 부서짐
 //            for(int i = 0; i < N; i++) {
 //                System.out.println(Arrays.toString(turretAfterAttack[i]));
 //            }
@@ -268,7 +268,7 @@ public class Main {
     public static void fixTurret() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if ((i == attackerRow && j == attackerCol) && (i == targetRow || j == targetCol)) {
+                if ((i == attackerRow && j == attackerCol) || (i == targetRow && j == targetCol)) {
                     continue;
                 }
 
