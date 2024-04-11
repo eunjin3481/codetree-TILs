@@ -42,7 +42,7 @@ public class Main {
 
             // 1. 공격자 선정
             selectAttacker();
-            attackTime[attackerRow][attackerCol] = K; // 공격 시간 업데이트
+            attackTime[attackerRow][attackerCol] = k; // 공격 시간 업데이트
 //            System.out.println("attackRow: " + attackerRow + ", attackerCol: " + attackerCol + ",공격력: " + turret[attackerRow][attackerCol]);
 
             // 2. 공격자의 공격
