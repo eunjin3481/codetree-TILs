@@ -54,6 +54,7 @@ public class Main {
             }
         }
 
+//        System.out.println("----초기");
 //        for (int i = 0; i < L; i++) {
 //            System.out.println(Arrays.toString(humansMap[i]));
 //        }
@@ -64,6 +65,7 @@ public class Main {
             int i = Integer.parseInt(st.nextToken());
             int d = Integer.parseInt(st.nextToken());
 
+//            System.out.println();
 //            System.out.println("----" + q + "턴");
 
             // 체스판에 없는 기사 제외
@@ -90,6 +92,8 @@ public class Main {
     public static void pushHuman(int i, int d) {
         humansMapAfterMove = new int[L][L];
         movedHumans = new HashSet<>();
+
+//        System.out.println(i + "기사가 " + d + "방향으로 움직임");
 
         // 밀기 실패했을 경우 아무 일도 안일어남
         if (!push(i, d)) {
@@ -159,6 +163,18 @@ public class Main {
     }
 
     public static void updateHuman(int attacker) {
+        // 움직이지 않은 애들 부터
+        for(int n = 1; n <= N; n++) {
+            if(movedHumans.contains(n)) {
+                continue;
+            }
+
+            for(int i = humans[n].r; i < humans[n].r + humans[n].h; i++) {
+                for(int j = humans[n].c; j < humans[n].c + humans[n].w; j++) {
+                    humansMap[i][j] = n;
+                }
+            }
+        }
 
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < L; j++) {
