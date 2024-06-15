@@ -104,6 +104,7 @@ public class Main {
     }
 
     public static void createGoods(int id, int revenue, int dest) {
+        isRemovedGoods[id] = false;
         goods.offer(new Goods(id, revenue, dest, dist[dest]));
     }
 
